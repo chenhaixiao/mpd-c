@@ -628,7 +628,7 @@ main ()
       			printf("\n 4 loop_amp is located at position %ld in memory \n\n",(long)loop_amp);
             }
           }
-				printf("\n Made it here \n\n");
+          printf("\n Made it here \n\n");
 				  best_start[amp_pool_count] = start_primer_count;
 				  amp_pool_count++;
 			
@@ -677,9 +677,9 @@ main ()
     {
       int k = best_start[i];
       for (j = 0; j < MAX_PAIRS; j++)
-	if (redundant_list[k][j] >= 0)
-	  if (poolable_count[redundant_list[k][j]] > poolable_count[best_start[i]])
-	    best_start[i] = redundant_list[k][j];
+        if (redundant_list[k][j] >= 0)
+          if (poolable_count[redundant_list[k][j]] > poolable_count[best_start[i]])
+            best_start[i] = redundant_list[k][j];
     }
   //
   // print cmat
@@ -728,7 +728,7 @@ main ()
   int *current_pool;
   current_pool = ivector (0, 20);
   make_pools (all_primer_pairs, poolable_matrix, poolable_count, redundant_list, best_start, amp_pool_count,
-	       primer_count, primer_count, current_pool, 0, 20);
+	       primer_count, primer_count, current_pool, 0, pool_size);
   return 0;
 }
 
@@ -1401,12 +1401,14 @@ find_primers (SNODE ** snp_list, AMPNODE * tn, int no_snp, int *flat, char *cont
     reverse_transcribe (contig, rt_contig, L);
     
     printf("\nReverse Transcribe\n\n");
+    /*
     printf("\n");for (i = 0; i < L; i++) {printf("%c", rt_contig[i]);
-    //if ((i + 1 == L - target_base) || (i + 2 == L - target_base)) printf(" * ");
+    if ((i + 1 == L - target_base) || (i + 2 == L - target_base)) printf(" * ");
     if (i % 80 == 79)
         printf("\n");
     }
     printf("\n");
+    */
     
     printf ("\n About to fill quality in reverse direction\n");
     
