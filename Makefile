@@ -6,11 +6,12 @@ INCLUDES   =
 CFLAGS     =  $(CC_OPTIONS) $(INCLUDES)
 LIBS       = -lm
 
-PRIMER_LG_EXE = build/mpd
+OUT = build
+PRIMER_LG_EXE = ${OUT}/mpd
 PRIMER_LG_SRC = src/mem.c src/mpd_lessGreedy.c
 PRIMER_LG_OBJ = $(PRIMER_LG_SRC:.c=.o)
 
-PRIMER_MG_EXE  = build/mpd_greedy
+PRIMER_MG_EXE  = ${OUT}/mpd_greedy
 PRIMER_MG_SRC  = src/mem.c src/mpd_moreGreedy.c
 PRIMER_MG_OBJ  = $(PRIMER_MG_SRC:.c=.o)
 
@@ -34,6 +35,7 @@ $(POOL_EXE): $(POOL_OBJ)
 
 introduce:
 	@echo "Building..."
+	mkdir -p ${OUT}
 
 clean:
 	rm -f *.o
