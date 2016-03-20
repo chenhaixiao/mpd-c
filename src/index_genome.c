@@ -3,8 +3,8 @@
 #include <string.h>
 #include <math.h>
 #include <float.h>
-#include <time.h>
 #include <ctype.h>
+#include <time.h>
 #include "dbg.h"
 
 #define TRUE 1
@@ -80,13 +80,15 @@ main()
 	char		scratch_pad, **contig_descript;
 	int		i         , k, N, not_done, max_mers;
 	unsigned int	j;
+	unsigned int	bit_mat[256];
 	int		fasta     , idepth, total_index;
 	int		max_index;
 	int		min_index;
+	int		is_bisulf;
 	long long	tot_mers;
 	int		length_from_N;
 	unsigned int	maskit;
-	unsigned int   *contig_length, max_sites, gpos, *this_mer, s1_mer;
+	unsigned int   *contig_length, max_sites, gpos, s1_mer;
 	unsigned int  **flat_index, newpos, expos, realpos;
 	unsigned int   *flat_index_count;
 	unsigned int   *flat_index_max;
@@ -141,6 +143,22 @@ main()
 		printf("\nCould Not Open file %s\n", ss);
 		exit(1);
 	}
+	read_var("Will the target DNA be bisulfite converted?\n", ss);
+	if ((strchr(ss, 'Y')) || (strchr(ss, 'y')))
+		is_bisulf = TRUE;
+	else
+		is_bisulf = FALSE;
+
+	for (i = 0; i < 256; i++)
+		bit_mat[i] = 0;
+
+	bit_mat[(int)'G'] = 2;
+	bit_mat[(int)'T'] = 3;
+	if (is_bisulf)
+		bit_mat[(int)'C'] = 3;
+	else
+		bit_mat[(int)'C'] = 1;
+
 	not_done = TRUE;
 
 	expos = 0;
@@ -174,7 +192,6 @@ main()
 
 
 	max_mers = 4 * idepth;
-	this_mer = uvector(0, max_mers);
 	length_from_N = 0;
 	s1_mer = 0;
 	while ((not_done) && (gpos + newpos < max_sites))
@@ -188,8 +205,6 @@ main()
 			newpos = 1 - idepth;
 			s1_mer = 0;
 			length_from_N = 0;
-			for (i = 0; i <= max_mers; i++)
-				this_mer[i] = 0;
 
 			fasta++;
 			/*
@@ -226,56 +241,38 @@ main()
 				if (scratch_pad == 'N')
 				{
 					length_from_N = 0;
-					for (k = 0; k <= max_mers; k++)
-						this_mer[k] = 0;
+					s1_mer = 0;
 				} else
 				{
 					unsigned	bit = 0;
-					if (scratch_pad == 'C')
-						bit = 1;
-					else if (scratch_pad == 'G')
-						bit = 2;
-					else if (scratch_pad == 'T')
-						bit = 3;
-
+					bit = bit_mat[(int)scratch_pad];
 					s1_mer = s1_mer << 2;
 					s1_mer &= maskit;
-
-					for (k = max_mers - 1; k >= 0; k--)
-					{
-						if (k < 4)
-							this_mer[k] = s1_mer + k;
-						else
-							this_mer[k] = (this_mer[k - 4] << 2) + bit;
-						this_mer[k] &= maskit;
-					}
 					s1_mer += bit;
 
 					length_from_N++;
-					unsigned int	where_now = gpos + newpos;
 					if (length_from_N >= idepth)
-						for (k = 0; k < max_mers; k++)
-							if ((k < 4) || (this_mer[k] != s1_mer))
+					{
+						unsigned int	where_now = gpos + newpos;
+						if (flat_index_count[s1_mer] == flat_index_max[s1_mer])
+						{
+							int		new_size = increase_buffer(flat_index_count[s1_mer]);
+							if (flat_index_max[s1_mer] == 0)
 							{
-								if (flat_index_count[this_mer[k]] == flat_index_max[this_mer[k]])
-								{
-									int		new_size = increase_buffer(flat_index_count[this_mer[k]]);
-									if (flat_index_max[this_mer[k]] == 0)
-									{
-										flat_index[this_mer[k]] = uvector(0, new_size - 1);
-										flat_index_max[this_mer[k]] = new_size;
-									} else
-									{
-										unsigned int   *tvect = uvector(0, new_size - 1);
-										memcpy(tvect, flat_index[this_mer[k]], sizeof(unsigned int) * flat_index_count[this_mer[k]]);
-										free_uvector(flat_index[this_mer[k]], 0, flat_index_max[this_mer[k]]);
-										flat_index[this_mer[k]] = tvect;
-										flat_index_max[this_mer[k]] = new_size;
-									}
-								}
-								flat_index[this_mer[k]][flat_index_count[this_mer[k]]] = where_now;
-								flat_index_count[this_mer[k]]++;
+								flat_index[s1_mer] = uvector(0, new_size - 1);
+								flat_index_max[s1_mer] = new_size;
+							} else
+							{
+								unsigned int   *tvect = uvector(0, new_size - 1);
+								memcpy(tvect, flat_index[s1_mer], sizeof(unsigned int) * flat_index_count[s1_mer]);
+								free_uvector(flat_index[s1_mer], 0, flat_index_max[s1_mer]);
+								flat_index[s1_mer] = tvect;
+								flat_index_max[s1_mer] = new_size;
 							}
+						}
+						flat_index[s1_mer][flat_index_count[s1_mer]] = where_now;
+						flat_index_count[s1_mer]++;
+					}
 				}
 				newpos++;
 			}
@@ -379,9 +376,9 @@ decode_basepairs(unsigned char *s, char *dest, int n)
 {
 	int		i         , m, l;
 	unsigned char	j;
-	char		a        , ss[6];
+	char		a        , ss[5];
 
-	ss[5] = '\0';
+	ss[4] = '\0';
 	for (i = 0; i < n; i++)
 	{
 		j = s[i];
@@ -822,7 +819,7 @@ read_var(char *line, char *result)
 	int		i;
 
 	sprintf(line1, "%s", line);
-	printf(line1);
+	printf("%s", line1);
 	fgets(result, 250, stdin);
 	result[strlen(result) - 1] = '\0';
 	/* printf("\n You entered %s which is %d characters long\n",result,strlen(result)); */
