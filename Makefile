@@ -24,7 +24,7 @@ INDEX_OBJ = $(INDEX_SRC:.c=.o)
 
 PROGS = $(PRIMER_LG_EXE) $(PRIMER_MG_EXE) $(POOL_EXE) $(INDEX_EXE)
 
-all: introduce $(PROGS)
+all: introduce createBuildDir $(PROGS)
 	@echo done.
 
 $(PRIMER_LG_EXE): $(PRIMER_LG_OBJ)
@@ -41,6 +41,9 @@ $(INDEX_EXE): $(INDEX_OBJ)
 
 introduce:
 	@echo "Building..."
+
+createBuildDir:
+	mkdir -p build
 
 clean:
 	rm -f *.o
