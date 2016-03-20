@@ -18,7 +18,11 @@ POOL_EXE = build/pool_check
 POOL_SRC = src/pool_check.c
 POOL_OBJ = $(POOL_SRC:.c=.o)
 
-PROGS = $(PRIMER_LG_EXE) $(PRIMER_MG_EXE) $(POOL_EXE)
+INDEX_EXE = build/index_genome
+INDEX_SRC = src/index_genome.c
+INDEX_OBJ = $(INDEX_SRC:.c=.o)
+
+PROGS = $(PRIMER_LG_EXE) $(PRIMER_MG_EXE) $(POOL_EXE) $(INDEX_EXE)
 
 all: introduce $(PROGS)
 	@echo done.
@@ -31,6 +35,9 @@ $(PRIMER_MG_EXE): $(PRIMER_MG_OBJ)
 
 $(POOL_EXE): $(POOL_OBJ)
 	$(CC) -o $@ $(CFLAGS) $(POOL_OBJ) $(LIBS)
+
+$(INDEX_EXE): $(INDEX_OBJ)
+	$(CC) -o $@ $(CFLAGS) $(INDEX_OBJ) $(LIBS)
 
 introduce:
 	@echo "Building..."
