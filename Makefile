@@ -46,10 +46,10 @@ createBuildDir:
 	mkdir -p build
 
 clean:
-	rm -f *.o
+	rm -f src/*.o
 
-distclean:
-	rm -f $(INDEX_EXE) $(PRIMER_LG_EXE) $(PRIMER_MG_EXE) *.o
+distclean: clean
+	rm -f $(INDEX_EXE) $(PRIMER_LG_EXE) $(PRIMER_MG_EXE) $(POOL_EXE)
 
 ## end of Makefile
 # DO NOT DELETE THIS LINE -- make depend depends on it.
