@@ -19,7 +19,7 @@ POOL_SRC = src/pool_check.c
 POOL_OBJ = $(POOL_SRC:.c=.o)
 
 INDEX_EXE = build/index_genome
-INDEX_SRC = src/index_genome.c
+INDEX_SRC = src/index_genome.c src/mem.c
 INDEX_OBJ = $(INDEX_SRC:.c=.o)
 
 PROGS = $(PRIMER_LG_EXE) $(PRIMER_MG_EXE) $(POOL_EXE) $(INDEX_EXE)
