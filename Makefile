@@ -6,7 +6,7 @@ INCLUDES   =
 CFLAGS     =  $(CC_OPTIONS) $(INCLUDES)
 LIBS       = -lm
 
-OUT = build
+OUT = bin
 PRIMER_LG_EXE = ${OUT}/mpd
 PRIMER_LG_SRC = src/mem.c src/mpd_lessGreedy.c
 PRIMER_LG_OBJ = $(PRIMER_LG_SRC:.c=.o)
@@ -15,11 +15,11 @@ PRIMER_MG_EXE  = ${OUT}/mpd_greedy
 PRIMER_MG_SRC  = src/mem.c src/mpd_moreGreedy.c
 PRIMER_MG_OBJ  = $(PRIMER_MG_SRC:.c=.o)
 
-POOL_EXE = build/pool_check
+POOL_EXE = ${OUT}/pool_check
 POOL_SRC = src/pool_check.c
 POOL_OBJ = $(POOL_SRC:.c=.o)
 
-INDEX_EXE = build/index_genome
+INDEX_EXE = ${OUT}/index_genome
 INDEX_SRC = src/index_genome.c src/mem.c
 INDEX_OBJ = $(INDEX_SRC:.c=.o)
 
