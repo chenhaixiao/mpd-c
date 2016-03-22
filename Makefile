@@ -19,9 +19,13 @@ POOL_EXE = build/pool_check
 POOL_SRC = src/pool_check.c
 POOL_OBJ = $(POOL_SRC:.c=.o)
 
-PROGS = $(PRIMER_LG_EXE) $(PRIMER_MG_EXE) $(POOL_EXE)
+INDEX_EXE = build/index_genome
+INDEX_SRC = src/index_genome.c src/mem.c
+INDEX_OBJ = $(INDEX_SRC:.c=.o)
 
-all: introduce $(PROGS)
+PROGS = $(PRIMER_LG_EXE) $(PRIMER_MG_EXE) $(POOL_EXE) $(INDEX_EXE)
+
+all: introduce createBuildDir $(PROGS)
 	@echo done.
 
 $(PRIMER_LG_EXE): $(PRIMER_LG_OBJ)
@@ -33,15 +37,21 @@ $(PRIMER_MG_EXE): $(PRIMER_MG_OBJ)
 $(POOL_EXE): $(POOL_OBJ)
 	$(CC) -o $@ $(CFLAGS) $(POOL_OBJ) $(LIBS)
 
+$(INDEX_EXE): $(INDEX_OBJ)
+	$(CC) -o $@ $(CFLAGS) $(INDEX_OBJ) $(LIBS)
+
 introduce:
 	@echo "Building..."
 	mkdir -p ${OUT}
 
-clean:
-	rm -f *.o
+createBuildDir:
+	mkdir -p build
 
-distclean:
-	rm -f $(INDEX_EXE) $(PRIMER_LG_EXE) $(PRIMER_MG_EXE) *.o
+clean:
+	rm -f src/*.o
+
+distclean: clean
+	rm -f $(INDEX_EXE) $(PRIMER_LG_EXE) $(PRIMER_MG_EXE) $(POOL_EXE)
 
 ## end of Makefile
 # DO NOT DELETE THIS LINE -- make depend depends on it.

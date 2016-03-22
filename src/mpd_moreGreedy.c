@@ -728,7 +728,7 @@ main ()
   int *current_pool;
   current_pool = ivector (0, 20);
   make_pools (all_primer_pairs, poolable_matrix, poolable_count, redundant_list, best_start, amp_pool_count,
-	       primer_count, primer_count, current_pool, 0, 20);
+	       primer_count, primer_count, current_pool, 0, pool_size);
   return 0;
 }
 
