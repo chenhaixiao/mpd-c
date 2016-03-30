@@ -88,5 +88,9 @@ sub FastaList {
       }
     }
   }
+  if ( scalar @fastas == 0 ) {
+    say "No fasta files to process. Exiting...";
+    exit(1);
+  }
   return ( \@fastas, \@sizes );
 }
