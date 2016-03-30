@@ -60,7 +60,7 @@
 <a id="flat-dbsnp" class="anchor" href="#flat-dbsnp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Flat dbSnp</h2>
 
 <ul>
-<li>Download the flat files for variants that should be avoided. For instance, dbSNP has a list.</li>
+<li>Download the flat files for variant sites that should be avoided when designing primers. For instance, dbSNP maintains a list for most organisms and you will find the proper format in the <code>ASN1_flat</code> directory. Here is the list for humans.</li>
 <li>Prepare a <code>sdx</code> file that contains the number of chromsome files to include as the 1st line and then a list of the names of all chromosome files. On the command line you might try: <code>ls -1 *.line | wc -l &gt; db_flat.sdx; ls -1 &gt;&gt; db_flat.sdx</code>. Note that the sdx should be in the same order that the chromsomes are in for the indexed genome. See the genome's sdx file (e.g., <code>cat hg38.d14.sdx</code>) to see the order.</li>
 </ul>
 
