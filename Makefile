@@ -6,25 +6,26 @@ INCLUDES   =
 CFLAGS     =  $(CC_OPTIONS) $(INCLUDES)
 LIBS       = -lm
 
-PRIMER_LG_EXE = build/mpd
+OUT = bin
+PRIMER_LG_EXE = ${OUT}/mpd
 PRIMER_LG_SRC = src/mem.c src/mpd_lessGreedy.c
 PRIMER_LG_OBJ = $(PRIMER_LG_SRC:.c=.o)
 
-PRIMER_MG_EXE  = build/mpd_greedy
+PRIMER_MG_EXE  = ${OUT}/mpd_greedy
 PRIMER_MG_SRC  = src/mem.c src/mpd_moreGreedy.c
 PRIMER_MG_OBJ  = $(PRIMER_MG_SRC:.c=.o)
 
-POOL_EXE = build/pool_check
+POOL_EXE = ${OUT}/pool_check
 POOL_SRC = src/pool_check.c
 POOL_OBJ = $(POOL_SRC:.c=.o)
 
-INDEX_EXE = build/index_genome
+INDEX_EXE = ${OUT}/index_genome
 INDEX_SRC = src/index_genome.c src/mem.c
 INDEX_OBJ = $(INDEX_SRC:.c=.o)
 
 PROGS = $(PRIMER_LG_EXE) $(PRIMER_MG_EXE) $(POOL_EXE) $(INDEX_EXE)
 
-all: introduce createBuildDir $(PROGS)
+all: introduce $(PROGS)
 	@echo done.
 
 $(PRIMER_LG_EXE): $(PRIMER_LG_OBJ)
@@ -41,9 +42,7 @@ $(INDEX_EXE): $(INDEX_OBJ)
 
 introduce:
 	@echo "Building..."
-
-createBuildDir:
-	mkdir -p build
+	mkdir -p ${OUT}
 
 clean:
 	rm -f src/*.o
