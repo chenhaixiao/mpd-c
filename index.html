@@ -1,32 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Mpd by wingolab-org</title>
+    <meta name="description" content="Mpd : Multiplex PCR Design">
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-dark.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <title>Mpd</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Mpd</h1>
-        <p>Multiplex PCR Design</p>
-        <p class="view"><a href="https://github.com/wingolab-org/mpd-c">View the Project on GitHub <small>wingolab-org/mpd-c</small></a></p>
-        <ul>
-          <li><a href="https://github.com/wingolab-org/mpd-c/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/wingolab-org/mpd-c/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/wingolab-org/mpd-c">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/wingolab-org/mpd-c">View on GitHub</a>
+
+          <h1 id="project_title">Mpd</h1>
+          <h2 id="project_tagline">Multiplex PCR Design</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/wingolab-org/mpd-c/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/wingolab-org/mpd-c/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>
 <a id="mpd---multiplex-pcr-design" class="anchor" href="#mpd---multiplex-pcr-design" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MPD - Multiplex PCR Design</h1>
 
@@ -60,7 +64,7 @@
 <a id="flat-dbsnp" class="anchor" href="#flat-dbsnp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Flat dbSnp</h2>
 
 <ul>
-<li>Download the flat files for variant sites that should be avoided when designing primers. For instance, dbSNP maintains a list for most organisms and you will find the proper format in the <code>ASN1_flat</code> directory. Here is the list for humans.</li>
+<li>Download and decompress the flat files for variant sites that should be avoided when designing primers. For instance, dbSNP maintains a list for most organisms and you will find the proper format in the <code>ASN1_flat</code> directory. The human data is located here: <code>ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606_b146_GRCh38p2/ASN1_flat/</code>.</li>
 <li>Prepare a <code>sdx</code> file that contains the number of chromsome files to include as the 1st line and then a list of the names of all chromosome files. On the command line you might try: <code>ls -1 *.line | wc -l &gt; db_flat.sdx; ls -1 &gt;&gt; db_flat.sdx</code>. Note that the sdx should be in the same order that the chromsomes are in for the indexed genome. See the genome's sdx file (e.g., <code>cat hg38.d14.sdx</code>) to see the order.</li>
 </ul>
 
@@ -68,15 +72,20 @@
 <a id="run-mpd" class="anchor" href="#run-mpd" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Run mpd</h2>
 
 <ul>
-<li>The easiest way of using MPD is to use the Perl pacakge <a href="http://github.com/wingolab-org/mpd-perl">MPD</a>, but either <code>mpd_lessGreedy</code> and <code>mpd_moreGreedy</code> binaries may be executed from the command line interactively.</li>
+<li>The easiest way of using MPD is to use the <a href="http://github.com/wingolab-org/mpd-perl">Perl pacakge MPD</a>, but either <code>mpd_lessGreedy</code> and <code>mpd_moreGreedy</code> binaries may be executed from the command line interactively.</li>
 </ul>
       </section>
     </div>
-    <footer>
-      <p>Project maintained by <a href="https://github.com/wingolab-org">wingolab-org</a></p>
-      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-    </footer>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Mpd maintained by <a href="https://github.com/wingolab-org">wingolab-org</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
     
+
   </body>
 </html>
