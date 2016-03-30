@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Mpd by wingolab-org</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Mpd</h1>
+        <p>Multiplex PCR Design</p>
+        <p class="view"><a href="https://github.com/wingolab-org/mpd-c">View the Project on GitHub <small>wingolab-org/mpd-c</small></a></p>
+        <ul>
+          <li><a href="https://github.com/wingolab-org/mpd-c/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/wingolab-org/mpd-c/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/wingolab-org/mpd-c">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="mpd---multiplex-pcr-design" class="anchor" href="#mpd---multiplex-pcr-design" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MPD - Multiplex PCR Design</h1>
+
+<p>by Thomas Wingo and David Cutler</p>
+
+<h2>
+<a id="description" class="anchor" href="#description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+
+<p>MPD is a program designed to automate creation of multiplex primer design written in C. The <code>mpd_lessGreedy</code> and <code>mpd_moreGreedy</code> binaries differ in which primer pool they choose to start with for pool creation. Either binary can be used as stand-alone or in conjunction with the <a href="http://github.com/wingolab-org/mpd-perl">MPD perl package</a>.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<ul>
+<li>Clone the repository</li>
+<li>Make with <code>make all</code>
+</li>
+<li>Binaries will be compiled and saved to the <code>build</code> directory</li>
+</ul>
+
+<h2>
+<a id="build-hashed-genome" class="anchor" href="#build-hashed-genome" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Build Hashed Genome</h2>
+
+<ul>
+<li>Download the genome of interest as a fasta file</li>
+<li>Use <code>bin/run_index.pl</code>, which creates a sh script to run <code>index_genome</code>
+</li>
+</ul>
+
+<h2>
+<a id="flat-dbsnp" class="anchor" href="#flat-dbsnp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Flat dbSnp</h2>
+
+<ul>
+<li>Download the flat files for variants that should be avoided. For instance, dbSNP has a list.</li>
+<li>Prepare a <code>sdx</code> file that contains the number of chromsome files to include as the 1st line and then a list of the names of all chromosome files. On the command line you might try: <code>ls -1 *.line | wc -l &gt; db_flat.sdx; ls -1 &gt;&gt; db_flat.sdx</code>. Note that the sdx should be in the same order that the chromsomes are in for the indexed genome. See the genome's sdx file (e.g., <code>cat hg38.d14.sdx</code>) to see the order.</li>
+</ul>
+
+<h2>
+<a id="run-mpd" class="anchor" href="#run-mpd" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Run mpd</h2>
+
+<ul>
+<li>The easiest way of using MPD is to use the Perl pacakge <a href="http://github.com/wingolab-org/mpd-perl">MPD</a>, but either <code>mpd_lessGreedy</code> and <code>mpd_moreGreedy</code> binaries may be executed from the command line interactively.</li>
+</ul>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/wingolab-org">wingolab-org</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
