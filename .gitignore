@@ -32,3 +32,4 @@
 *.snp
 *.dSYM/
 build/
+bin/
