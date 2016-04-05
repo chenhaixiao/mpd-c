@@ -593,6 +593,9 @@ main ()
         this_min_tm -= tm_inc;
         this_max_tm += tm_inc;
         this_trial++;
+        if (this_min_tm < min_tm || this_max_tm > max_tm) {
+          break;
+        }
       } while (this_trial < 10 && found_count < 1);
       printf("\n 3 loop_amp is located at position %ld in memory \n\n",(long)loop_amp);
 
