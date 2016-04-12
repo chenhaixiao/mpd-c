@@ -22,50 +22,50 @@
 
 typedef struct primer_node
 {
-  int start;
-  int end;
-  char *sequence;
-  double tm;
-  double gc;
+    int start;
+    int end;
+    char *sequence;
+    double tm;
+    double gc;
 } PRIMER;
 
 typedef struct primer_pair
 {
-  PRIMER *forward;
-  PRIMER *reverse;
-  char *sequence;
-  int length;
-  double gc;
-  double tm;
-  int chrom;
+    PRIMER *forward;
+    PRIMER *reverse;
+    char *sequence;
+    int length;
+    double gc;
+    double tm;
+    int chrom;
 } PNODE;
 
 typedef struct snp_node
 {
-  char baseA;
-  char baseB;
-  char name[32];
-  unsigned int pos;
-  unsigned int chrom;
-  int no_pairs;
-  int no_disc;
-  double het;
-  PNODE **pair;
+    char baseA;
+    char baseB;
+    char name[32];
+    unsigned int pos;
+    unsigned int chrom;
+    int no_pairs;
+    int no_disc;
+    double het;
+    PNODE **pair;
 } SNODE;
 
 typedef struct amp_node
 {
-  char name[32];
-  unsigned int start_pos;
-  unsigned int stop_pos;
-  unsigned int chrom;
-  int no_pairs;
-  PNODE **pair;
+    char name[32];
+    unsigned int start_pos;
+    unsigned int stop_pos;
+    unsigned int chrom;
+    int no_pairs;
+    PNODE **pair;
 } AMPNODE;
 
 void die ( char *message );
 int read_primer_pools (const char *filename, int max_ppairs, int max_primer_count,
-  int *pool_count, PNODE ***primer_pool);
+                       int *pool_count, PNODE ***primer_pool);
 void Print_isPcr (const char *filename, int max_pools, int *primers_in_pool, PNODE ***primer_pool);
 void reverse_string (char *contig, char *s, int n);
 void check_poolability (PNODE ** primer_pool, int N, int pool_number);
@@ -79,10 +79,10 @@ void flat_index_contig (int *index, char *contig, int L, int depth);
 void high_index (unsigned char *dhigh, char *s, int n);
 int
 find_primers (SNODE ** snp_list, AMPNODE * tn, int no_snp, int *flat, char *contig,
-	      int L, int min_primer, int max_primer, int amp_max, int amp_min,
-	      double min_gc, double max_gc, double min_tm, double max_tm,
-	      int depth, int local_depth, int target_base, int start_pos,
-	      unsigned char *highmer, int **repeats, int no_repeats, int end_region, int chrom);
+              int L, int min_primer, int max_primer, int amp_max, int amp_min,
+              double min_gc, double max_gc, double min_tm, double max_tm,
+              int depth, int local_depth, int target_base, int start_pos,
+              unsigned char *highmer, int **repeats, int no_repeats, int end_region, int chrom);
 void count_copys (int *flat, char *s, int n, int *reps);
 void simple_count_copys (int *flat, char *s, int n, int *reps, int forward);
 void reverse_transcribe (char *contig, char *s, int n);
@@ -102,9 +102,9 @@ void index_string (int *index, char *s, int n);
 void convert_int_basepairs (int i, char *s, int k);
 void
 fill_quality_scores (int *flat, int *local, char *contig, int L, int window, int depth, int ld, int min_primer,
-		     int max_primer, double *fq_left, double *gc_left, int *index_left, int *plen_l,
-		     double min_gc, double max_gc, double min_tm, double max_tm, int **repeats,
-		     int no_repeats, unsigned char *highmer, int start_pos);
+                     int max_primer, double *fq_left, double *gc_left, int *index_left, int *plen_l,
+                     double min_gc, double max_gc, double min_tm, double max_tm, int **repeats,
+                     int no_repeats, unsigned char *highmer, int start_pos);
 int find_frag (int x, int **list, int start, int end, int guess);
 void fill_hs (char a, char b, double *h, double *s);
 double calc_tm (char *s, int n);
