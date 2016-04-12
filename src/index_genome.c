@@ -1,7 +1,6 @@
 #include "mpd.h"
 
 static FILE *outfile, **innfile;
-static int idum;
 
 int
 main ()

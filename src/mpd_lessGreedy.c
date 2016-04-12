@@ -2,7 +2,6 @@
 #include "mem.h"
 
 static FILE *outfile;
-static int idum;
 
 int
 main ()
