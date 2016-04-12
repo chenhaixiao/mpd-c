@@ -1,4 +1,6 @@
-#include <stdlib.h>
+#ifndef __mem_h__
+#define __mem_h__
+#endif
 
 #ifndef UINT_TYPE
 typedef unsigned int uint;

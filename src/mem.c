@@ -1,6 +1,8 @@
 #include "mem.h"
 #include "dbg.h"
 
+/*---------------------------------------------------------------------*/
+
 char *cvector(int nl, int nh)
 {
 	char *v;
@@ -10,6 +12,8 @@ char *cvector(int nl, int nh)
 		log_err("allocation failure in cvector()");
 	return v - nl;
 }
+
+/*---------------------------------------------------------------------*/
 
 uchar *ucvector(int nl, int nh)
 {
@@ -21,6 +25,8 @@ uchar *ucvector(int nl, int nh)
 	return v - nl;
 }
 
+/*---------------------------------------------------------------------*/
+
 int *ivector(int nl, int nh)
 {
 	int *v;
@@ -30,6 +36,8 @@ int *ivector(int nl, int nh)
 		log_err("allocation failure in ivector()");
 	return v - nl;
 }
+
+/*---------------------------------------------------------------------*/
 
 double *dvector(int nl, int nh)
 {
@@ -41,6 +49,7 @@ double *dvector(int nl, int nh)
 	return v - nl;
 }
 
+/*---------------------------------------------------------------------*/
 
 int **imatrix(int nrl, int nrh, int ncl, int nch)
 {
@@ -60,6 +69,8 @@ int **imatrix(int nrl, int nrh, int ncl, int nch)
 	return m;
 }
 
+/*---------------------------------------------------------------------*/
+
 void free_imatrix(int **m, int nrl, int nrh, int ncl, int nch)
 {
 	int        i;
@@ -69,6 +80,7 @@ void free_imatrix(int **m, int nrl, int nrh, int ncl, int nch)
 	free((void *) (m + nrl));
 }
 
+/*---------------------------------------------------------------------*/
 
 double **dmatrix(int nrl, int nrh, int ncl, int nch)
 {
@@ -89,6 +101,8 @@ double **dmatrix(int nrl, int nrh, int ncl, int nch)
 	return m;
 }
 
+/*---------------------------------------------------------------------*/
+
 void free_dmatrix(double **m, int nrl, int nrh, int ncl, int nch)
 {
 	int i;
@@ -97,6 +111,8 @@ void free_dmatrix(double **m, int nrl, int nrh, int ncl, int nch)
 		free((void *) (m[i] + ncl));
 	free((void *) (m + nrl));
 }
+
+/*---------------------------------------------------------------------*/
 
 char **cmatrix(int nrl, int nrh, int ncl, int nch)
 {
@@ -117,6 +133,7 @@ char **cmatrix(int nrl, int nrh, int ncl, int nch)
 	return m;
 }
 
+/*---------------------------------------------------------------------*/
 
 uchar **ucmatrix(int nrl, int nrh, int ncl, int nch)
 {
@@ -137,7 +154,7 @@ uchar **ucmatrix(int nrl, int nrh, int ncl, int nch)
 	return m;
 }
 
-
+/*---------------------------------------------------------------------*/
 
 void free_cmatrix(char **m, int nrl, int nrh, int ncl, int nch)
 {
@@ -148,6 +165,7 @@ void free_cmatrix(char **m, int nrl, int nrh, int ncl, int nch)
 	free((void *) (m + nrl));
 }
 
+/*---------------------------------------------------------------------*/
 
 void free_ucmatrix(uchar ** m, int nrl, int nrh, int ncl, int nch)
 {
@@ -158,24 +176,113 @@ void free_ucmatrix(uchar ** m, int nrl, int nrh, int ncl, int nch)
 	free((void *) (m + nrl));
 }
 
+/*---------------------------------------------------------------------*/
+
 void free_cvector(char *v, int nl, int nh)
 {
 	free((void *) (v + nl));
 }
+
+/*---------------------------------------------------------------------*/
 
 void free_ucvector(uchar * v, int nl, int nh)
 {
 	free((void *) (v + nl));
 }
 
+/*---------------------------------------------------------------------*/
 
 void free_ivector(int *v, int nl, int nh)
 {
 	free((void *) (v + nl));
 }
 
+/*---------------------------------------------------------------------*/
+
 void free_dvector(double *v, int nl, int nh)
 {
 	free((void *) (v + nl));
 }
+
+/*---------------------------------------------------------------------*/
+
+int *
+create_ivec (int row)
+{
+  int *v = (int *) malloc ((unsigned) row * sizeof (int));
+  check_mem(v);
+  for (int i = 0; i < row; i++ )
+  {
+    v[i] = 0;
+  }
+  return v;
+
+error:
+  exit(1);
+}
+
+/*---------------------------------------------------------------------*/
+
+char *
+create_cvec (int row)
+{
+  char *v = (char *) malloc ((unsigned) row * sizeof (char));
+  check_mem(v);
+  for (int i = 0; i < row; i++ )
+  {
+    v[i] = 0;
+  }
+  return v;
+
+error:
+  exit(1);
+}
+
+/*---------------------------------------------------------------------*/
+
+int **
+create_imat (int row, int col)
+{
+  int **m = (int **) malloc ((unsigned) row * sizeof (int *));
+  check_mem(m);
+
+  for (int i = 0; i < col; i++)
+  {
+    m[i] = (int *) malloc ((unsigned) col * sizeof (int));
+    check_mem(m[i]);
+    for (int j = 0; j < col; j++ )
+    {
+      m[i][j] = 0;
+    }
+  }
+  return m;
+
+error:
+  exit(1);
+}
+
+/*---------------------------------------------------------------------*/
+
+char **
+create_cmat (int row, int col)
+{
+  char **m = (char **) malloc ((unsigned) row * sizeof (char *));
+  check_mem(m);
+
+  for (int i = 0; i < col; i++)
+  {
+    m[i] = (char *) malloc ((unsigned) col * sizeof (char));
+    check_mem(m[i]);
+    for (int j = 0; j < col; j++)
+    {
+      m[i][j] = 0;
+    }
+  }
+  return m;
+
+error:
+  exit(1);
+}
+
+/*---------------------------------------------------------------------*/
 
