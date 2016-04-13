@@ -436,14 +436,20 @@ main ()
             
             do
             {
-                found_count = find_primers (snp_list[target_contig], loop_amp, contig_snp_count[target_contig],	// number of snps in the contig
+                found_count = find_primers (snp_list[target_contig],
+                                            loop_amp,
+                                            contig_snp_count[target_contig],	// number of snps in the contig
                                             flat_index, scratch_pad,	// copy of the target
                                             j,	// length of region
-                                            min_primer, max_primer, amp_max, amp_min, min_gc, max_gc, this_min_tm, this_max_tm, idepth,	// index depth
+                                            min_primer, max_primer, amp_max, amp_min, min_gc, max_gc, this_min_tm, this_max_tm,
+                                            idepth,	// index depth
                                             10,	// local depth
                                             j / 2,	// target base (from old primer_snp.c program)
-                                            genome_start + 1, highmer,	// not sure
-                                            repeat_list[target_contig], no_repeats[target_contig], pad_size,	// size on either end of the contig to look for primer
+                                            genome_start + 1,
+                                            highmer,
+                                            repeat_list[target_contig],
+                                            no_repeats[target_contig],
+                                            pad_size,	// size on either end of the contig to look for primer
                                             loop_amp->chrom);
                 this_min_tm -= tm_inc;
                 this_max_tm += tm_inc;
@@ -524,7 +530,8 @@ main ()
     for (i = 0; i < primer_count; i++)
         for (j = i + 1; j < primer_count; j++)
         {
-            poolable_matrix[i][j] = is_poolable_primer (all_primer_pairs[i], all_primer_pairs[j], (amp_max*.2), 2);
+            double max_amp_diff = (double) (amp_max * 0.15) + 1;
+            poolable_matrix[i][j] = is_poolable_primer (all_primer_pairs[i], all_primer_pairs[j], (int) max_amp_diff, 2);
             poolable_matrix[j][i] = poolable_matrix[i][j];
             poolable_count[i] += poolable_matrix[i][j];
             poolable_count[j] += poolable_matrix[i][j];
