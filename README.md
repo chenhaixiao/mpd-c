@@ -21,8 +21,14 @@ MPD is a program designed to automate creation of multiplex primer design writte
 - Use `bin/run_index.pl`, which creates a sh script to run `index_genome`
 
 ### Flat dbSnp
-- These can be obtained from this [this repository](https://bitbucket.org/wingolab/mpd-dat/).
-- To create a flat snp file of sites to avoid based on your own criteria, each line should contain one snp in the following format: `name numberOfReporters chrom position maf Allele1/Allele2`. The numberOfReporters field is no longer used but retained for backwards compatibility. The fields should be tab-delimited. Prepare a `sdx` file that contains the number of chromsome files to include as the 1st line and then a list of the names of all chromosome files. On the command line you might try: `ls -1 *.line | wc -l > db_flat.sdx; ls -1 >> db_flat.sdx`. Note that the sdx should be in the same order that the chromsomes are in for the indexed genome. See the genome's sdx file (e.g., `cat hg38.d14.sdx`) to see the order.
+- These can be obtained from this [this repository](https://bitbucket.org/wingolab/mpd-dat/), which were prepared from dbSNP version 140.
+- To create your own flat snp file set based on criteria of your own devising, each line should contain tab-delimited fields of the following:
+```
+name numberOfReporters chrom position MinorAlleleFrequency allele1/allele2
+```
+- The `numberOfReporters` field is no longer used but retained for backwards compatibility. 
+- Prepare a `sdx` file that contains the number of chromsome files to include as the 1st line and then a list of the names of all chromosome files. On the command line you might try: `ls -1 *.line | wc -l > db_flat.sdx; ls -1 >> db_flat.sdx`. Note that the sdx should be in the same order that the chromsomes are in for the indexed genome. See the genome's sdx file (e.g., `cat hg38.d14.sdx`) to see the order.
 
 ##  Run mpd
 - The easiest way of using MPD is to use the [Perl pacakge MPD](http://github.com/wingolab-org/mpd-perl), but either `mpd_lessGreedy` and `mpd_moreGreedy` binaries may be executed from the command line interactively.
+
