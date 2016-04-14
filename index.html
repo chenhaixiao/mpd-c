@@ -56,7 +56,7 @@
 
 <ul>
 <li>You will need a hashed copy of the genome to run the primer software.</li>
-<li>Instructions below show how you can create one yourself. A prebuild hg38 genome with flat dbSnp files is available from <a href="https://bitbucket.org/wingolab/mpd-dat/">this repository</a>. It may be cloned like so, <code>git clone https://bitbucket.org/wingolab/mpd-dat.git</code>. </li>
+<li>Instructions below show how you can create one yourself. A prebuild hg38 genome with flat dbSnp files is available from <a href="https://bitbucket.org/wingolab/mpd-dat/">this repository</a>. It may be cloned like so, <code>git clone https://bitbucket.org/wingolab/mpd-dat.git</code>.</li>
 </ul>
 
 <h3>
@@ -72,7 +72,15 @@
 <a id="flat-dbsnp" class="anchor" href="#flat-dbsnp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Flat dbSnp</h3>
 
 <ul>
-<li>Download and decompress the flat files for variant sites that should be avoided when designing primers. For instance, dbSNP maintains a list for most organisms and you will find the proper format in the <code>ASN1_flat</code> directory. The human data is located here: <code>ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606_b146_GRCh38p2/ASN1_flat/</code>.</li>
+<li>These can be obtained from this <a href="https://bitbucket.org/wingolab/mpd-dat/">this repository</a>, which were prepared from dbSNP version 140.</li>
+<li>To create your own flat snp file set based on criteria of your own devising, each line should contain tab-delimited fields of the following:</li>
+</ul>
+
+<pre><code>name numberOfReporters chrom position MinorAlleleFrequency allele1/allele2
+</code></pre>
+
+<ul>
+<li>The <code>numberOfReporters</code> field is no longer used but retained for backwards compatibility. </li>
 <li>Prepare a <code>sdx</code> file that contains the number of chromsome files to include as the 1st line and then a list of the names of all chromosome files. On the command line you might try: <code>ls -1 *.line | wc -l &gt; db_flat.sdx; ls -1 &gt;&gt; db_flat.sdx</code>. Note that the sdx should be in the same order that the chromsomes are in for the indexed genome. See the genome's sdx file (e.g., <code>cat hg38.d14.sdx</code>) to see the order.</li>
 </ul>
 
