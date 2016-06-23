@@ -68,8 +68,8 @@ int read_primer_pools (const char *filename, int max_ppairs, int max_primer_coun
                        int *pool_count, PNODE ***primer_pool);
 void Print_isPcr (const char *filename, int max_pools, int *primers_in_pool, PNODE ***primer_pool);
 void reverse_string (char *contig, char *s, int n);
-void check_poolability (PNODE ** primer_pool, int N, int pool_number);
-void Check_all_pools ( int max_pools, int *pool_count, PNODE ***primer_pool );
+void check_poolability (PNODE ** primer_pool, int primers_in_pool, int pool_number, int max_amp_diff);
+void Check_all_pools ( int max_pools, int *primers_in_pool, PNODE ***primer_pool, int max_amplicon_length );
 
 PNODE ***primer_pool_create ( int max_ppairs, int max_ppairs_count);
 PRIMER *create_primer (int max_primer_length);
