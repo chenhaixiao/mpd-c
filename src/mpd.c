@@ -736,7 +736,7 @@ find_primers (SNODE ** snp_list, AMPNODE * tn, int no_snp, int *flat, char *cont
      printf("\n");
      */
 
-    printf ("\n About to fill quality in reverse direction\n");
+    // printf ("\n About to fill quality in reverse direction\n");
 
     fill_quality_scores (flat, local_index, rt_contig, L, minim (target_base - 30, end_region), depth, local_depth,
                          min_primer, max_primer, fq_right, gc_right, index_right, plen_r,
