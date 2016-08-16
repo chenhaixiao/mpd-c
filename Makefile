@@ -1,7 +1,7 @@
 ## Makefile 
 
 CC	       = gcc
-CC_OPTIONS = -Wall -g -v -O3 -std=gnu11 -DNDEBUG
+CC_OPTIONS = -Wall -g -v -O3 -DNDEBUG
 INCLUDES   =  
 CFLAGS     =  $(CC_OPTIONS) $(INCLUDES)
 LIBS       = -lm

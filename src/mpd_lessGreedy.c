@@ -1,7 +1,7 @@
 #include "mpd.h"
 #include "mem.h"
 
-static FILE *outfile;
+static FILE *outfile, *compOutFile, *bestOutFile, *redOutFile;
 
 int
 main ()
@@ -16,7 +16,7 @@ main ()
     int min_primer, max_primer, genome_start, genome_stop;
     FILE *sfile, *cfile, *idfile, *rfile, *highfile, *snpfile_idx, *snpfile, *target_ampfile;
     double max_gc, min_gc, min_tm, max_tm, tm_inc;
-    SNODE ***snp_list;		/* remember, an array of typedef is always an array of pointers this gives us a 2d array, i.e., matrix */
+    SNODE ***snp_list;
     AMPNODE **target_amp_list;
     
     outfile = stdout;
@@ -25,9 +25,35 @@ main ()
     if ((strchr (ss, 'D')) || (strchr (ss, 'd')))
     {
         read_var ("Please Enter File Name for Output\n", ss);
+
+        // main output file
         if ((outfile = fopen (ss, "w")) == (FILE *) NULL)
         {
             printf ("\n Can not open file %s\n", ss);
+            exit (1);
+        }
+
+        // compatability matrix file
+        sprintf(sss, "%s.comp", ss);
+        if ((compOutFile = fopen (sss, "w")) == (FILE *) NULL)
+        {
+            printf ("\n Can not open file %s\n", sss);
+            exit (1);
+        }
+
+        // best matrix file
+        sprintf(sss, "%s.best", ss);
+        if ((bestOutFile = fopen (sss, "w")) == (FILE *) NULL)
+        {
+            printf ("\n Can not open file %s\n", sss);
+            exit (1);
+        }
+
+        // redundant matrix file
+        sprintf(sss, "%s.red", ss);
+        if ((redOutFile = fopen (sss, "w")) == (FILE *) NULL)
+        {
+            printf ("\n Can not open file %s\n", sss);
             exit (1);
         }
     }
@@ -458,7 +484,7 @@ main ()
                     break;
                 }
             } while (this_trial < 10 && found_count < 1);
-            printf("\n 3 loop_amp is located at position %ld in memory \n\n",(long)loop_amp);
+            // printf("\n 3 loop_amp is located at position %ld in memory \n\n",(long)loop_amp);
             
             free_cvector (scratch_pad, 0, j + 5);
             int nearest_stop = 0;
@@ -488,10 +514,10 @@ main ()
                         {
                             printf("\n\nj = %d, jj = %d, start_primer_count = %d, primer_count = %d\n\n", j, jj, start_primer_count, primer_count);
                             redundant_list[j][jj] = start_primer_count + jj;
-                            printf("\n 4 loop_amp is located at position %ld in memory \n\n",(long)loop_amp);
+                            // printf("\n 4 loop_amp is located at position %ld in memory \n\n",(long)loop_amp);
                         }
                     }
-                    printf("\n Made it here \n\n");
+                    // printf("\n Made it here \n\n");
                     best_start[amp_pool_count] = start_primer_count;
                     amp_pool_count++;
                     
@@ -545,48 +571,47 @@ main ()
                     if (poolable_count[redundant_list[k][j]] > poolable_count[best_start[i]])
                         best_start[i] = redundant_list[k][j];
         }
-    //
+
     // print cmat
-    //
-    //printf ("\n");
-    //for (i = 0; i < primer_count; i++)
-    //printf ("\t%s_%s_%03d", all_primer_pairs[i]->forward->sequence, all_primer_pairs[i]->reverse->sequence, i);
-    //for (i = 0; i < primer_count; i++)
-    //{
-    //printf ("\n%s_%s_%03d", all_primer_pairs[i]->forward->sequence, all_primer_pairs[i]->reverse->sequence, i);
-    //for (j = 0; j < primer_count; j++)
-    //if (i != j)
-    //printf ("\t%d", (int) poolable_matrix[i][j]);
-    //else
-    //printf ("\t.");
-    //}
-    //printf ("\n");
-    //
-    // print best start matrix
-    //
-    //  for (i = 0; i < amp_pool_count; i++)
-    //  {
-    //    int k = best_start[i];
-    //    for (j = 0; j < MAX_PAIRS; j++)
-    //      if (redundant_list[k][j] >= 0)
-    //        printf (" %03d", redundant_list[k][j]);
-    //      else
-    //        printf ("   .");
-    //    printf ("\t| Region: %03d\t| Primer: %03d\t| Poolable Count: %03d\n", i, best_start[i], poolable_count[best_start[i]]);
-    //  }
-    //
+    for (i = 0; i < primer_count; i++)
+      fprintf ( compOutFile, "\t%s_%s_%03d", all_primer_pairs[i]->forward->sequence, all_primer_pairs[i]->reverse->sequence, i);
+    for (i = 0; i < primer_count; i++)
+    {
+      fprintf (compOutFile, "\n%s_%s_%03d", all_primer_pairs[i]->forward->sequence, all_primer_pairs[i]->reverse->sequence, i);
+      for (j = 0; j < primer_count; j++)
+        if (i != j)
+          fprintf (compOutFile, "\t%d", (int) poolable_matrix[i][j]);
+        else
+          fprintf (compOutFile, "\t.");
+    }
+    fprintf (compOutFile, "\n");
+    
+     // print best start matrix
+    for (i = 0; i < amp_pool_count; i++)
+    {
+      int k = best_start[i];
+      for (j = 0; j < MAX_PAIRS; j++)
+        if (redundant_list[k][j] >= 0)
+          fprintf (bestOutFile, " %03d", redundant_list[k][j]);
+        else
+          fprintf (bestOutFile, "   .");
+      fprintf (bestOutFile, "\t| Region: %03d\t| Primer: %03d\t| Poolable Count: %03d\n", i, best_start[i], poolable_count[best_start[i]]);
+    }
+    
     // redundant matrix
-    //
-    //  printf("\n\n");
-    //  for (i=0; i<primer_count; i++)
-    //  {
-    //    for (j=0;j<MAX_PAIRS; j++)
-    //      if (redundant_list[i][j] >= 0)
-    //        printf (" %03d", redundant_list[i][j]);
-    //      else
-    //        printf ("   .");
-    //    printf("\n");
-    //  }
+    for (i=0; i<primer_count; i++)
+    {
+      for (j=0;j<MAX_PAIRS; j++)
+        if (redundant_list[i][j] >= 0)
+          fprintf ( redOutFile, " %03d", redundant_list[i][j]);
+        else
+          fprintf ( redOutFile, "   .");
+      fprintf(redOutFile, "\n");
+    }
+
+    fclose(compOutFile);
+    fclose(bestOutFile);
+    fclose(redOutFile);
     
     printf ("\n\n going to make_pools with amp_pools = %d, primer_count = %d\n", amp_pool_count, primer_count);
     int *current_pool;

@@ -20,7 +20,7 @@ make_greedy_pools (FILE *outfile, PNODE **plist, char **cmat, int *pc, int **red
                     best = pc[bstart[i]];
                     this_p = bstart[i];
                 }
-        if (this_p < 1)
+        if (this_p < 0)
         {
             printf ("\n This is impossible \n");
             for (i = 0; i < Nregs; i++)
@@ -94,20 +94,27 @@ make_less_greedy_pools (FILE *outfile, PNODE **plist, char **cmat, int *pc, int 
     int this_p = -1;
     if (this_pool == 0)
     {
-        // fprintf (outfile, "\nStarting a New Pool\n");
+        printf ("\nStarting a New Pool\n\n");
         int best = 100000000;
         for (i = 0; i < Nregs; i++)
+        {
             if (bstart[i] >= 0)
+            {
                 if (pc[bstart[i]] < best)
                 {
+                  printf("in here with i: %d, best: %d, pc: %d, bestStart: %d\n", i, best, pc[bstart[i]], bstart[i]);
                     best = pc[bstart[i]];
                     this_p = bstart[i];
+                  printf("leaving here with i: %d, best: %d, pc: %d, bestStart: %d\n", i, best, pc[bstart[i]], bstart[i]);
                 }
-        if (this_p < 1)
+            }
+        }
+
+        if (this_p < 0)
         {
-            printf ("\n This is impossible \n");
+            printf ("\n This is impossible. \n");
             for (i = 0; i < Nregs; i++)
-                printf ("\n Best start region %d is %d", i, bstart[i]);
+                printf ("\n Best start region %d is %d with poolable count: %d", i, bstart[i], pc[bstart[i]]);
             exit (1);
         }
     }
@@ -157,7 +164,9 @@ make_less_greedy_pools (FILE *outfile, PNODE **plist, char **cmat, int *pc, int 
         this_pool %= max_pool;
     }
     else
+    {
         this_pool = 0;
+    }
 
     printf ("\ngoing to make_pools with N = %d, still = %d, this_pool = %d, max_pool = %d\n\n", N, still, this_pool,
             max_pool);
