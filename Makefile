@@ -1,7 +1,7 @@
 ## Makefile 
 
 CC	       = gcc
-CC_OPTIONS = -Wall -g -v -O3 -DNDEBUG
+CC_OPTIONS = -Wall -g -v -O3 -DNDEBUG -std=c99
 INCLUDES   =  
 CFLAGS     =  $(CC_OPTIONS) $(INCLUDES)
 LIBS       = -lm
