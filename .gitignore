@@ -33,3 +33,6 @@
 *.dSYM/
 build/
 bin/
+
+# perl stuff
+.tidyall.d
