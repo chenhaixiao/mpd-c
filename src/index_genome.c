@@ -49,11 +49,6 @@ main ()
     {
         sprintf (sss, "Please Enter Name For Contig Fasta File %d\n", i + 1);
         read_var (sss, filename[i]);
-        if ((innfile[i] = fopen (filename[i], "r")) == (FILE *) NULL)
-        {
-            printf ("\n Can not open file %s\n", filename[i]);
-            exit (1);
-        }
     }
     read_var ("Basename to save compressed Genome and Indexes\n", basename);
     
@@ -117,6 +112,12 @@ main ()
     
     for (fasta = 0; fasta < N; fasta++)
     {
+        if ((innfile[fasta] = fopen (filename[fasta], "r")) == (FILE *) NULL)
+        {
+            printf ("\n Can not open file %s\n", filename[fasta]);
+            exit (1);
+        }
+
         not_done = TRUE;
         
         in_repeat = FALSE;
@@ -178,6 +179,7 @@ main ()
                     not_done = FALSE;
             }
         }
+        fclose(innfile[fasta]);
         contig_length[fasta] = newpos;
         if (in_repeat)
             fwrite (&newpos, sizeof (int), 1, rpfile);
