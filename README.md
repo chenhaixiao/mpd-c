@@ -3,6 +3,10 @@ MPD - Multiplex PCR Design
 
 by Thomas Wingo and David Cutler
 
+## Citation
+
+Please cite our [paper](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-016-1453-3) if you use MPD in your work. Thanks.
+
 ## Description
 
 MPD is a program designed to automate creation of multiplex primer design written in C. The `mpd_lessGreedy` and `mpd_moreGreedy` binaries differ in which primer pool they choose to start with for pool creation. Either binary can be used as stand-alone or in conjunction with the [MPD perl package](http://github.com/wingolab-org/mpd-perl).
