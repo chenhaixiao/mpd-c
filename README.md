@@ -23,6 +23,7 @@ MPD is a program designed to automate creation of multiplex primer design writte
 ### Build Hashed Genome
 - Download the genome of interest as a fasta file
 - Use `bin/run_index.pl`, which creates a sh script to run `index_genome`
+  - You'll need to install these perl packages to use this script: `Path::Tiny`, `Data::Dump`, and `Getopt::Long`, which can be installed using [`cpanm`][1] like so `cpanm  Path::Tiny Data::Dump Getopt::Long`.  
 
 ### Flat dbSnp
 - These can be obtained from this [this repository](https://bitbucket.org/wingolab/mpd-dat/), which were prepared from dbSNP version 140.
@@ -36,3 +37,4 @@ name numberOfReporters chrom position MinorAlleleFrequency allele1/allele2
 ##  Run mpd
 - The easiest way of using MPD is to use the [Perl pacakge MPD](http://github.com/wingolab-org/mpd-perl), but either `mpd_lessGreedy` and `mpd_moreGreedy` binaries may be executed from the command line interactively.
 
+[1]: https://metacpan.org/pod/App::cpanminus
